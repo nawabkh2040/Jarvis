@@ -190,8 +190,17 @@ def listenAudio():
                     print("वालेकुम अस्सलाम व रहमतुल्लाहि व बरकतुहू")
                     speak_hindi("वालेकुम अस्सलाम व रहमतुल्लाहि व बरकतुहू ")
 
-               if f"Tell me a joke" in text or f"tell me a joke":
+               if f"Tell me a joke" in text or f"tell me a joke" in text:
                     print(text)
+                    tell_ai(text)
+               if f"Tell me About" in text or f"tell me about" in text:
+                    print(text)
+                    tell_ai(text)
+               if f"Open my favorite website" in text or f"open my favorite website" in text:
+                    print(text)
+                    base_url = "http://nawabkh2040.pythonanywhere.com/"
+                    speechAudio("Opening Life Saver QR Code Website. Created by Nawab khan")
+                    webbrowser.get('windows-default').open(base_url)
 
                # todo: Add More Features
                else:
@@ -202,6 +211,7 @@ def listenAudio():
                # sorry="Sorry Please Speak Again"
                # speechAudio(sorry)
                print("Sorry Please Speak Again")
+               print(e)
 while True:
      qu = listenAudio()
      if qu==-1:
