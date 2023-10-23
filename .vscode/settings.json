@@ -1,0 +1,30 @@
+{
+     "cSpell.words": [
+          "Alaikum",
+          "apikey",
+          "Assalam",
+          "Assalamu",
+          "assalamualaikum",
+          "Bajke",
+          "gtts",
+          "msedge",
+          "openai",
+          "POWERPNT",
+          "pyttsx",
+          "startfile",
+          "Walekum",
+          "WINWORD",
+          "अलाईकु",
+          "अस्सलम",
+          "अस्सलाम",
+          "बरकतुहू",
+          "बरकतूहउ",
+          "रहमतुल्लाहि",
+          "राहमतुल्यही",
+          "वालेकुम"
+     ],
+     "[python]": {
+          "editor.defaultFormatter": "ms-python.autopep8"
+     },
+     "python.formatting.provider": "none"
+}
