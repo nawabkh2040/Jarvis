@@ -25,16 +25,16 @@ Web browser (e.g., Google Chrome)
 OpenAI API key (replace 'apikey' with your actual key)
 How to Use
 Clone The Repo. 
-  git clone https://github.com/nawabkh2040/Jarvis.git
+  #git clone https://github.com/nawabkh2040/Jarvis.git
 then 
-  cd Jarvis
+  #cd Jarvis
 Install the required Python libraries using
-  pip install -r requirements.txt.
+  #pip install -r requirements.txt.
 
 Replace 'apikey' in the script with your actual OpenAI API key.
 
 Run the script using
-  python main.py.
+  #python main.py.
 
 Speak a voice command to interact with the assistant.
 
