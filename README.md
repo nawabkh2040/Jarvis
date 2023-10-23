@@ -49,11 +49,10 @@ You can customize the assistant by adding more voice command options and expandi
 "Play a song on YouTube"
 "Tell me a joke"
 "Open my favorite website"
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
 
 # Acknowledgments
-The script was created by [Your Name].
-Please replace [Your Name] in the acknowledgments section with your name or the appropriate credit.
-
-Feel free to enhance this README by adding additional sections or information specific to your project.
+The script was created by Nawab khan.
+# Linked Profile 
+https://www.linkedin.com/in/nawab-khan-47ab641aa
+# Instagram Profile
+https://www.instagram.com/pathan_nawab__1/
