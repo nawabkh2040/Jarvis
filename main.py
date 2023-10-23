@@ -10,7 +10,7 @@ import random
 import requests
 from selenium import webdriver
 import time
-
+import pyjokes
 
 
 
@@ -59,6 +59,31 @@ def ai(data_j):
           speechAudio(response["choices"][0]["text"])
      except Exception as e:
           print("Sorry Some issue in chat Gpt")
+
+def tell_ai(tell_j):
+     openai.api_key = apikey
+     response = openai.Completion.create(
+           model="gpt-3.5-turbo-instruct",
+          prompt=tell_j,
+          temperature=1,
+          max_tokens=256,
+          top_p=1,
+          frequency_penalty=0,
+          presence_penalty=0
+     )
+     try:
+          print(response["choices"][0]["text"])
+          speechAudio(response["choices"][0]["text"])
+     except Exception as e:
+          if "a joke" in tell_j.lower():
+               My_joke = pyjokes.get_joke(language="en", category="all")
+               print(My_joke)
+               speechAudio(My_joke)
+          else:
+               print("Sorry Some issue in chat Gpt")
+
+
+     
 
 def Image_gen(image_data):
      openai.api_key = apikey
@@ -164,6 +189,10 @@ def listenAudio():
                     print("Walekum Assalam ")
                     print("वालेकुम अस्सलाम व रहमतुल्लाहि व बरकतुहू")
                     speak_hindi("वालेकुम अस्सलाम व रहमतुल्लाहि व बरकतुहू ")
+
+               if f"Tell me a joke" in text or f"tell me a joke":
+                    print(text)
+
                # todo: Add More Features
                else:
                     print(text)
