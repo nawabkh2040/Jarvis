@@ -24,11 +24,17 @@ Required Python libraries (requests, gTTS, pyttsx3, speech_recognition, openai, 
 Web browser (e.g., Google Chrome)
 OpenAI API key (replace 'apikey' with your actual key)
 How to Use
-Install the required Python libraries using pip install -r requirements.txt.
+Clone The Repo. 
+  git clone https://github.com/nawabkh2040/Jarvis.git
+then 
+  cd Jarvis
+Install the required Python libraries using
+  pip install -r requirements.txt.
 
 Replace 'apikey' in the script with your actual OpenAI API key.
 
-Run the script using python main.py.
+Run the script using
+  python main.py.
 
 Speak a voice command to interact with the assistant.
 
