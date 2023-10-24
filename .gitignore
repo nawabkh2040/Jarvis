@@ -6,3 +6,7 @@
 config.py
 config.py
 configration.py
+google_bard.py
+cookies.json
+bing_gpt.py
+__pycache__/configration.cpython-311.pyc
