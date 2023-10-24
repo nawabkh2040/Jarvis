@@ -50,7 +50,6 @@ def ai(data_j):
                frequency_penalty=0,
                presence_penalty=0
           )
-     
           print(response["choices"][0]["text"])
           text += response["choices"][0]["text"]
           if not os.path.exists("AI_Gen"):
@@ -82,6 +81,28 @@ def tell_ai(tell_j):
                speechAudio(f"From PyJokes: {My_joke}")
           else:
                print("Sorry Some issue in chat Gpt")
+
+def chat(chat_j):
+     try:
+          openai.api_key = apikey
+          response = openai.ChatCompletion.create(
+               model="gpt-3.5-turbo",
+               messages=[
+               {
+                    "role": "assistant",
+                    "content": chat_j
+               }
+               ],
+               temperature=1,
+               max_tokens=256,
+               top_p=1,
+               frequency_penalty=0,
+               presence_penalty=0
+          )
+          print(response['choices'][0]['message']['content'])
+          speechAudio(response['choices'][0]['message']['content'])
+     except Exception as e:
+          print("Sorry Some issue in OpenAI ")
 
 
 def Image_gen(image_data):
@@ -153,7 +174,7 @@ def run_jarvis():
      if f"open microsoft excel" in text.lower() or f"Open Microsoft Excel" in text or f"open excel" in text.lower(): 
           filepath="C:\\Program Files\\Microsoft Office\\root\Office16\\EXCEL.EXE"
           os.startfile(filepath)
-     if f"open microsoft powerpoint" in text.lower() or f"Open Microsoft Powerpoint" in text or f"open powerpoint" in text.lower(): 
+     if f"open microsoft powerpoint" in text.lower() or f"open powerpoint" in text.lower(): 
           filepath="C:\\Program Files\\Microsoft Office\\root\Office16\\POWERPNT.EXE"
           os.startfile(filepath)
      if f"the time" in text.lower() or f"The Time " in text: 
@@ -183,6 +204,10 @@ def run_jarvis():
                     Image_gen(search_query)
           else:
                ai(search_query)
+     if "write" in text.lower():
+          ai(text)
+     if "create a image" in text.lower() or "create a photo" in text.lower() or "Create a picture" in text.lower() or "Create the images" in text.lower() or "Create image" in text.lower() or "Create images" in text.lower() or "Create the pictures" in text.lower() or "Create pictures" in text.lower() or "give me a photo" in text.lower() or "give me a images" in text.lower() or "give me images" in text.lower():
+          Image_gen(text)
      if f"open browser and search" in text.lower() or f"Open Browser And Search" in text: 
           search_query = text.split("search for", 1)[1].strip()
           search_url = f"https://www.google.com/search?q={search_query}"
@@ -242,7 +267,7 @@ def run_jarvis():
           speechAudio("Opening Life Saver QR Code Website. Created by Nawab khan")
           webbrowser.get('windows-default').open(base_url)
      else:
-          tell_ai(text)
+          chat(text)
 
 
 while True:
