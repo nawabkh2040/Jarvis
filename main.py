@@ -104,6 +104,7 @@ def listenAudio():
           try:
                print("Recognizing....")
                text1 = r.recognize_google(audio, language='en-in')
+               print(text1)
                if f"jarvis" in text1.lower() or "Jarvis" in text1:
                     # speechAudio("Hello Nawab ")
                     text1 = text1.replace("Jarvis",'')
@@ -196,7 +197,6 @@ def run_jarvis():
      if f"what is" in text.lower():
           tell_ai(text) 
      if f"play song" in text.lower() or f"Play Song" in text or "play music" in text or f"music play" in text or " play music" in text.lower(): 
-          
           if "music" in text:
                search_query = text.split("music ", 1)[1].strip()
           if "song" in text:
@@ -206,7 +206,6 @@ def run_jarvis():
                search_url = f"https://www.youtube.com/search?q={search_query}"
                speechAudio("Opening Song In Youtube "+search_query)
                webbrowser.get('windows-default').open(search_url)
-          
           else:
                base_url = "https://saavn.me/search/songs"
                params = {
@@ -237,17 +236,16 @@ def run_jarvis():
      if f"Tell me" in text or f"tell me" in text:
           print(text)
           tell_ai(text)
-     # if f"Tell me About" in text or f"tell me about" in text:
-     #      print(text)
-     #      tell_ai(text)
      if f"Open my favorite website" in text or f"open my favorite website" in text:
           print(text)
           base_url = "http://nawabkh2040.pythonanywhere.com/"
           speechAudio("Opening Life Saver QR Code Website. Created by Nawab khan")
           webbrowser.get('windows-default').open(base_url)
+     else:
+          tell_ai(text)
 
 
 while True:
     qu=run_jarvis()
     if qu == -1:
-         exit
+         exit()
