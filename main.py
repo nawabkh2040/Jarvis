@@ -5,7 +5,7 @@ import pyttsx3
 import openai
 from gtts import gTTS
 import datetime
-from config import apikey
+from configration import apikey
 import random
 import requests
 from selenium import webdriver
@@ -38,18 +38,19 @@ def speechAudio(qu):
 
 
 def ai(data_j):
-     openai.api_key = apikey
-     text=f"AI response For Prompt {data_j}\n ****************************************************************\n\n"
-     response = openai.Completion.create(
-          model="gpt-3.5-turbo-instruct",
-          prompt=data_j,
-          temperature=1,
-          max_tokens=256,
-          top_p=1,
-          frequency_penalty=0,
-          presence_penalty=0
-     )
      try:
+          openai.api_key = apikey
+          text=f"AI response For Prompt {data_j}\n\n\n"
+          response = openai.Completion.create(
+               model="gpt-3.5-turbo-instruct",
+               prompt=data_j,
+               temperature=1,
+               max_tokens=256,
+               top_p=1,
+               frequency_penalty=0,
+               presence_penalty=0
+          )
+     
           print(response["choices"][0]["text"])
           text += response["choices"][0]["text"]
           if not os.path.exists("AI_Gen"):
@@ -61,29 +62,27 @@ def ai(data_j):
           print("Sorry Some issue in chat Gpt")
 
 def tell_ai(tell_j):
-     openai.api_key = apikey
-     response = openai.Completion.create(
-           model="gpt-3.5-turbo-instruct",
-          prompt=tell_j,
-          temperature=1,
-          max_tokens=256,
-          top_p=1,
-          frequency_penalty=0,
-          presence_penalty=0
-     )
      try:
+          openai.api_key = apikey
+          response = openai.Completion.create(
+               model="gpt-3.5-turbo-instruct",
+               prompt=tell_j,
+               temperature=1,
+               max_tokens=256,
+               top_p=1,
+               frequency_penalty=0,
+               presence_penalty=0
+          )
           print(response["choices"][0]["text"])
           speechAudio(response["choices"][0]["text"])
      except Exception as e:
-          if "a joke" in tell_j.lower():
+          if "joke" in tell_j.lower():
                My_joke = pyjokes.get_joke(language="en", category="all")
-               print(My_joke)
-               speechAudio(My_joke)
+               print(f"From PyJokes: {My_joke}")
+               speechAudio(f"From PyJokes: {My_joke}")
           else:
                print("Sorry Some issue in chat Gpt")
 
-
-     
 
 def Image_gen(image_data):
      openai.api_key = apikey
@@ -93,6 +92,9 @@ def Image_gen(image_data):
           size="1024x1024"
      )
      image_url = response['data'][0]['url']
+     speechAudio(f"Here is the picture of {image_data}")
+     print(image_url)
+     webbrowser.open(image_url)
 
 def listenAudio():
      r = sr.Recognizer()
@@ -146,9 +148,28 @@ def listenAudio():
                     minutes=datetime.datetime.now().strftime("%M")
                     second=datetime.datetime.now().strftime("%S")
                     speechAudio(f"Current  time is {hour} Bajke {minutes} minutes  or {second} second")
-               if f"using ai" in text.lower() or f"Using AI" in text:
-                    search_query = text.split("AI", 1)[1].strip()
-                    ai(search_query)
+               if f"using ai" in text.lower() or f"Using AI" in text or "using artificial intelligence" in text.lower():
+                    if "artificial intelligence" in text.lower():
+                         search_query = text.split("intelligence", 1)[1].strip()
+                    if "AI" in text:
+                         search_query = text.split("AI", 1)[1].strip()
+                    if "ai" in text:
+                         search_query = text.split("ai", 1)[1].strip()
+                    if "image" in search_query.lower() or "picture" in search_query.lower() or "photo" in search_query.lower():
+                         if "image" in search_query:
+                              search_query = search_query.split("image", 1)[1].strip()
+                              speechAudio("Image is Generating...")
+                              Image_gen(search_query)
+                         elif "picture" in search_query:
+                              search_query = search_query.split("picture", 1)[1].strip()
+                              speechAudio("picture is Generating...")
+                              Image_gen(search_query)
+                         elif "photo" in search_query:
+                              search_query = search_query.split("photo", 1)[1].strip()
+                              speechAudio("photo is Generating...")
+                              Image_gen(search_query)
+                    else:
+                         ai(search_query)
                if f"open browser and search" in text.lower() or f"Open Browser And Search" in text: 
                     search_query = text.split("search for", 1)[1].strip()
                     search_url = f"https://www.google.com/search?q={search_query}"
@@ -161,28 +182,39 @@ def listenAudio():
                     speechAudio("Opening Song In Youtube "+search_query)
                     webbrowser.get('windows-default').open(search_url)
                if f"what is" in text.lower():
-                    ai(text) 
-               if f"play song" in text.lower() or f"Play Song" in text: 
-                    search_query = text.split("song ", 1)[1].strip()
-                    base_url = "https://saavn.me/search/songs"
-                    params = {
-                         "query": search_query,
-                         "page": 1,
-                         "limit": 2
-                    }
-                    response = requests.get(base_url, params=params)
-                    if response.status_code == 200:
-                         data = response.json()
-                         songs = data["data"]["results"]
-                         if songs:
-                              song = songs[0]
-                              print(song['url'])
-                              webbrowser.get('windows-default').open(song['url'])
-                         else:
-                              print("No songs found")
-                              speechAudio("No songs found")
+                    tell_ai(text) 
+               if f"play song" in text.lower() or f"Play Song" in text or "play music" in text or f"music play" in text or " play music" in text.lower(): 
+                    
+                    if "music" in text:
+                         search_query = text.split("music ", 1)[1].strip()
+                    if "song" in text:
+                         search_query = text.split("song ", 1)[1].strip()
+                    if f"youtube" in search_query or  "YouTube" in search_query :
+                         search_query = text.split("youtube ", 1)[1].strip()
+                         search_url = f"https://www.youtube.com/search?q={search_query}"
+                         speechAudio("Opening Song In Youtube "+search_query)
+                         webbrowser.get('windows-default').open(search_url)
+                    
                     else:
-                         print(f"Error making request. Status code: {response.status_code}")
+                         base_url = "https://saavn.me/search/songs"
+                         params = {
+                              "query": search_query,
+                              "page": 1,
+                              "limit": 2
+                         }
+                         response = requests.get(base_url, params=params)
+                         if response.status_code == 200:
+                              data = response.json()
+                              songs = data["data"]["results"]
+                              if songs:
+                                   song = songs[0]
+                                   print(song['url'])
+                                   webbrowser.get('windows-default').open(song['url'])
+                              else:
+                                   print("No songs found")
+                                   speechAudio("No songs found")
+                         else:
+                              print(f"Error making request. Status code: {response.status_code}")
                if f"who is the creator of universe" in text.lower():
                     speechAudio("Allah")
                if f"Assalam Walekum" in text or f" Assalamualaikum " in text or  f" Assalamu Alaikum "  in text or f"assalamu alaikum " in text or f"assalamualaikum" in text.lower():
@@ -190,12 +222,12 @@ def listenAudio():
                     print("वालेकुम अस्सलाम व रहमतुल्लाहि व बरकतुहू")
                     speak_hindi("वालेकुम अस्सलाम व रहमतुल्लाहि व बरकतुहू ")
 
-               if f"Tell me a joke" in text or f"tell me a joke" in text:
+               if f"Tell me" in text or f"tell me" in text:
                     print(text)
                     tell_ai(text)
-               if f"Tell me About" in text or f"tell me about" in text:
-                    print(text)
-                    tell_ai(text)
+               # if f"Tell me About" in text or f"tell me about" in text:
+               #      print(text)
+               #      tell_ai(text)
                if f"Open my favorite website" in text or f"open my favorite website" in text:
                     print(text)
                     base_url = "http://nawabkh2040.pythonanywhere.com/"
@@ -208,12 +240,9 @@ def listenAudio():
                     return text
                
           except Exception as e:
-               # sorry="Sorry Please Speak Again"
-               # speechAudio(sorry)
                print("Sorry Please Speak Again")
                print(e)
 while True:
      qu = listenAudio()
      if qu==-1:
           break
-# speechAudio("Allah  subhanahu waa ta'ala")
